@@ -54,11 +54,25 @@ namespace BeautyWebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Route("{id}")]
-        public async Task<ActionResult<List<Customer>>> GetSingleCustomers(int id)
+        //Alternative (?) [Route("{id}")]
+        public async Task<ActionResult<Customer>> GetSingleCustomer(int id)
         {
-            var customerSingle = customers.Find(x => x.Id == id);
-            return Ok(customerSingle);
+            var customer = customers.Find(x => x.CustomerId == id);
+            if(customer is null) 
+                return NotFound("Sorry ,but this customer doesn't exist");
+            return Ok(customer);
         }
+
+        [HttpPost]
+        
+        public async Task<ActionResult<List<Customer>>> AddCustomer(Customer customer)
+        {
+            customers.Add(customer);
+            return Ok(customer);
+        }
+
+
+
+
     }
 }

@@ -14,12 +14,14 @@ namespace BeautyWebAPI
             
             // Add services to the container.
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContextFactory<BeautyStudioDbContext>((DbContextOptionsBuilder options)=> options.UseSqlServer(connectionstring));
 
             var app = builder.Build();
+           // await UpdateDatabase(app);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -35,7 +37,14 @@ namespace BeautyWebAPI
 
             app.MapControllers();
 
-            app.Run();
+            app.RunAsync();
         }
+
+        //private static async Task UpdateDatabase(IHost app)
+        //{
+        //    using IServiceScope serviceScope = app.Services.CreateScope();
+        //    await using DataContext context = serviceScope.ServiceProvider.GetService<DataContext>()!;
+        //    await context.Initialize();
+        //}
     }
 }
