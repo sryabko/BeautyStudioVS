@@ -8,7 +8,7 @@ namespace BeautyWebAPI
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             var connectionstring = builder.Configuration.GetConnectionString("Default") ??
                 throw new NullReferenceException("No connection string in Conbgig!");
             
@@ -20,7 +20,7 @@ namespace BeautyWebAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContextFactory<BeautyStudioDbContext>((DbContextOptionsBuilder options)=> options.UseSqlServer(connectionstring));
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
            // await UpdateDatabase(app);
 
             // Configure the HTTP request pipeline.
@@ -36,8 +36,8 @@ namespace BeautyWebAPI
 
 
             app.MapControllers();
-
-            app.RunAsync();
+            app.Run();
+            //app.RunAsync();  //?????
         }
 
         //private static async Task UpdateDatabase(IHost app)
